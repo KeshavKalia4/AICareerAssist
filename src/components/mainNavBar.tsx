@@ -1,6 +1,10 @@
 import React from "react";
 
-export default function MainNavBar() {
+interface MainNavBarProps {
+    onChangeForm: (form: string) => void;
+}
+
+export default function MainNavBar({ onChangeForm }: MainNavBarProps) {
     return (
         <nav style={styles.navbar}>
             <div style={styles.brand}>
@@ -8,11 +12,11 @@ export default function MainNavBar() {
             </div>
 
             <div style={styles.navItems}>
-                <button style={styles.navButton}>Dashboard</button>
-                <button style={styles.navButton}>My Roadmap</button>
-                <button style={styles.navButton}>Resume Review</button>
-                <button style={styles.navButton}>Progress</button>
-                <button style={styles.navButton}>Settings</button>
+                <button style={styles.navButton} onClick={() => onChangeForm("dashboard")}>Dashboard</button>
+                <button style={styles.navButton} onClick={() => onChangeForm("roadmap")}>My Roadmap</button>
+                <button style={styles.navButton} onClick={() => onChangeForm("resume-review")}>Resume Review</button>
+                <button style={styles.navButton} onClick={() => onChangeForm("progress")}>Progress</button>
+                <button style={styles.navButton} onClick={() => onChangeForm("settings")}>Settings</button>
             </div>
         </nav>
     );

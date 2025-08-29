@@ -1,40 +1,60 @@
 "use client";
 import React from "react";
 import MainNavBar from "./mainNavBar";
+import { useState } from "react";
+import RoadmapView from "./roadmapView";
+import ResumeReviewView from "./resumeReviewView";
+import ProgressView from "./progressView";
+import SettingsView from "./settingsView";
 
 export default function Dashboard() {
+
+    const [activeForm, setActiveForm] = useState("dashboard");
+
+
+
     return (
         <div style={styles.page}>
-            <MainNavBar />
-            <h1 style={styles.title}>Create Your Career Roadmap</h1>
-            <p style={styles.description}>Upload your resume and set your career goals to get started</p>
+            <MainNavBar onChangeForm={setActiveForm} />
 
-            <div style={styles.container}>
-                <h2 style={styles.containerTitle}>Get started</h2>
-                <div style={styles.contentArea}>
-                    <div style={styles.inputRow}>
-                        <div style={styles.uploadSection}>
-                            <label style={styles.uploadLabel}>Resume Upload</label>
-                            <div style={styles.uploadArea}>
-                                <p style={styles.uploadText}>Click to upload resume</p>
+            {activeForm === "dashboard" && (
+                <>
+                    <h1 style={styles.title}>Create Your Career Roadmap</h1>
+                    <p style={styles.description}>Upload your resume and set your career goals to get started</p>
+
+                    <div style={styles.container}>
+                        <h2 style={styles.containerTitle}>Get started</h2>
+                        <div style={styles.contentArea}>
+                            <div style={styles.inputRow}>
+                                <div style={styles.uploadSection}>
+                                    <label style={styles.uploadLabel}>Resume Upload</label>
+                                    <div style={styles.uploadArea}>
+                                        <p style={styles.uploadText}>Click to upload resume</p>
+                                    </div>
+                                </div>
+
+                                <div style={styles.goalSection}>
+                                    <label style={styles.goalLabel}>Career Goal</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g., Software Engineer at Google"
+                                        style={styles.goalInput}
+                                    />
+                                </div>
                             </div>
-                        </div>
 
-                        <div style={styles.goalSection}>
-                            <label style={styles.goalLabel}>Career Goal</label>
-                            <input
-                                type="text"
-                                placeholder="e.g., Software Engineer at Google"
-                                style={styles.goalInput}
-                            />
+                            <button style={styles.generateButton}>
+                                Generate my personalized roadmap
+                            </button>
                         </div>
                     </div>
+                </>
+            )}
 
-                    <button style={styles.generateButton}>
-                        Generate my personalized roadmap
-                    </button>
-                </div>
-            </div>
+            {activeForm === "roadmap" && <RoadmapView />}
+            {activeForm === "resume-review" && <ResumeReviewView />}
+            {activeForm === "progress" && <ProgressView />}
+            {activeForm === "settings" && <SettingsView />}
         </div>
     )
 }
@@ -50,39 +70,40 @@ const styles = {
         paddingTop: "80px",
     },
     title: {
-        fontSize: "36px",
+        fontSize: "42px",
         fontWeight: "bold",
-        marginBottom: "16px",
+        marginBottom: "20px",
         color: "#333",
         textAlign: "center" as const,
     },
     description: {
-        fontSize: "16px",
+        fontSize: "18px",
         color: "#666",
-        marginBottom: "30px",
+        marginBottom: "40px",
         textAlign: "center" as const,
-        maxWidth: "500px",
+        maxWidth: "600px",
     },
     container: {
-        width: "90%",
-        maxWidth: "900px",
+        width: "98%",
+        maxWidth: "1200px",
         backgroundColor: "#f5f5f5",
-        borderRadius: "10px",
-        padding: "25px",
-        marginTop: "20px",
+        borderRadius: "12px",
+        padding: "40px",
+        marginTop: "10px",
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
     },
     containerTitle: {
-        fontSize: "28px",
+        fontSize: "32px",
         fontWeight: "bold",
-        marginBottom: "15px",
+        marginBottom: "20px",
         color: "#333",
+        textAlign: "center" as const,
     },
     contentArea: {
-        minHeight: "300px", // Example height, adjust as needed
+        minHeight: "400px",
         backgroundColor: "white",
         borderRadius: "8px",
-        padding: "20px",
+        padding: "30px",
         boxShadow: "inset 0 1px 3px rgba(0, 0, 0, 0.05)",
     },
     inputRow: {
@@ -109,7 +130,7 @@ const styles = {
 
     uploadArea: {
         width: "100%",
-        height: "100px",
+        height: "140px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -152,11 +173,11 @@ const styles = {
     },
     goalInput: {
         width: "100%",
-        height: "100px",
-        padding: "10px",
+        height: "140px",
+        padding: "15px",
         border: "1px solid #ccc",
         borderRadius: "6px",
-        fontSize: "14px",
+        fontSize: "16px",
         color: "black",
         boxSizing: "border-box" as const,
         resize: "none" as const,
