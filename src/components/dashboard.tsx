@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
+import MainNavBar from "./mainNavBar";
 
 export default function Dashboard() {
     return (
         <div style={styles.page}>
+            <MainNavBar />
             <h1 style={styles.title}>Create Your Career Roadmap</h1>
             <p style={styles.description}>Upload your resume and set your career goals to get started</p>
 
@@ -45,25 +47,29 @@ const styles = {
         flexDirection: "column" as const,
         alignItems: "center",
         justifyContent: "flex-start",
-        paddingTop: "50px",
+        paddingTop: "80px",
     },
     title: {
-        fontSize: "48px",
+        fontSize: "36px",
         fontWeight: "bold",
         marginBottom: "16px",
         color: "#333",
+        textAlign: "center" as const,
     },
     description: {
-        fontSize: "18px",
+        fontSize: "16px",
         color: "#666",
+        marginBottom: "30px",
+        textAlign: "center" as const,
+        maxWidth: "500px",
     },
     container: {
-        width: "80%",
-        maxWidth: "800px",
+        width: "90%",
+        maxWidth: "900px",
         backgroundColor: "#f5f5f5",
         borderRadius: "10px",
-        padding: "20px",
-        marginTop: "30px",
+        padding: "25px",
+        marginTop: "20px",
         boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
     },
     containerTitle: {
