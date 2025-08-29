@@ -11,8 +11,6 @@ export default function Dashboard() {
 
     const [activeForm, setActiveForm] = useState("dashboard");
 
-
-
     return (
         <div style={styles.page}>
             <MainNavBar onChangeForm={setActiveForm} />
