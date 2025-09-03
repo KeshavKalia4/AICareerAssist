@@ -2,6 +2,14 @@
 import NavBar from "./NavBar";  // adjust path as needed
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import {
+    ClerkProvider,
+    SignInButton,
+    SignUpButton,
+    SignedIn,
+    SignedOut,
+    UserButton,
+} from '@clerk/nextjs'
 
 export default function Landing() {
     const router = useRouter();
@@ -12,29 +20,33 @@ export default function Landing() {
     };
 
     return (
-        <div style={styles.page}>
-            <NavBar />
-            <div style={styles.container}>
-                <h1 style={styles.title}>Your AI Career Roadmap</h1>
+        <ClerkProvider>
 
-                <p style={styles.paragraph}>
-                    Upload your resume, share your career goals, and get a personalized roadmap to success with AI-powered insights.
-                </p>
 
-                <button
-                    onClick={handleClick}
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                    style={{
-                        ...styles.button,
-                        borderColor: hover ? "#aaa" : "#ddd",
-                        backgroundColor: hover ? "#e0f0ff" : "white",
-                    }}
-                >
-                    Get Started
-                </button>
+            <div style={styles.page}>
+                <NavBar />
+                <div style={styles.container}>
+                    <h1 style={styles.title}>Your AI Career Roadmap</h1>
+
+                    <p style={styles.paragraph}>
+                        Upload your resume, share your career goals, and get a personalized roadmap to success with AI-powered insights.
+                    </p>
+
+                    <button
+                        onClick={handleClick}
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                        style={{
+                            ...styles.button,
+                            borderColor: hover ? "#aaa" : "#ddd",
+                            backgroundColor: hover ? "#e0f0ff" : "white",
+                        }}
+                    >
+                        Get Started
+                    </button>
+                </div>
             </div>
-        </div>
+        </ClerkProvider>
     );
 }
 
