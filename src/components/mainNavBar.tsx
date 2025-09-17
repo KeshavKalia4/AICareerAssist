@@ -1,10 +1,25 @@
 import React from "react";
+import { useClerk } from "@clerk/nextjs";  // Clerk hook
+import { useRouter } from "next/navigation";
 
 interface MainNavBarProps {
-    onChangeForm: (form: string) => void;
+    onChangeForm?: (form: string) => void;  // optional now
+    onSignOut?: () => void;                 // new prop for landing
 }
 
-export default function MainNavBar({ onChangeForm }: MainNavBarProps) {
+export default function MainNavBar({ onChangeForm, onSignOut }: MainNavBarProps) {
+    const { signOut } = useClerk();
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        await signOut();
+        if (onSignOut) {
+            onSignOut();     // let Landing handle redirect
+        } else {
+            router.push("/"); // fallback hard redirect
+        }
+    };
+
     return (
         <nav style={styles.navbar}>
             <div style={styles.brand}>
@@ -12,11 +27,20 @@ export default function MainNavBar({ onChangeForm }: MainNavBarProps) {
             </div>
 
             <div style={styles.navItems}>
-                <button style={styles.navButton} onClick={() => onChangeForm("dashboard")}>Dashboard</button>
-                <button style={styles.navButton} onClick={() => onChangeForm("roadmap")}>My Roadmap</button>
-                <button style={styles.navButton} onClick={() => onChangeForm("resume-review")}>Resume Review</button>
-                <button style={styles.navButton} onClick={() => onChangeForm("progress")}>Progress</button>
-                <button style={styles.navButton} onClick={() => onChangeForm("settings")}>Settings</button>
+                {onChangeForm && (
+                    <>
+                        <button style={styles.navButton} onClick={() => onChangeForm("dashboard")}>Dashboard</button>
+                        <button style={styles.navButton} onClick={() => onChangeForm("roadmap")}>My Roadmap</button>
+                        <button style={styles.navButton} onClick={() => onChangeForm("resume-review")}>Resume Review</button>
+                        <button style={styles.navButton} onClick={() => onChangeForm("progress")}>Progress</button>
+                        <button style={styles.navButton} onClick={() => onChangeForm("settings")}>Settings</button>
+                    </>
+                )}
+
+                {/* 🔥 Global Sign Out */}
+                <button style={styles.navButton} onClick={handleSignOut}>
+                    Sign Out
+                </button>
             </div>
         </nav>
     );

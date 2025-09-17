@@ -3,19 +3,13 @@ import NavBar from "./NavBar"; // adjust path as needed
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
-    ClerkProvider,
-    SignInButton,
-    SignUpButton,
-    SignedIn,
-    SignedOut,
-    UserButton,
     useClerk,
     useUser,
 } from '@clerk/nextjs'
 
 export default function Landing() {
     const { isSignedIn } = useUser()
-    const { openSignIn, signOut } = useClerk() // You can combine these
+    const { openSignIn, signOut } = useClerk()
     const router = useRouter();
     const [hover, setHover] = useState(false);
 
@@ -30,37 +24,15 @@ export default function Landing() {
         }
     };
 
-    // Temporary sign out button
-    const handleSignOut = () => {
-        console.log("Signing out");
-        signOut();
+    const handleSignOut = async () => {
+        await signOut();      // clear Clerk session
+        router.push("/");     // back to landing
     };
 
     return (
         <div style={styles.page}>
-            <NavBar />
+            <NavBar onSignOut={handleSignOut} />
             <div style={styles.container}>
-                {/* ADD THE SIGN OUT BUTTON HERE */}
-                {isSignedIn && (
-                    <button
-                        onClick={handleSignOut}
-                        style={{
-                            position: 'absolute',
-                            top: '10px',
-                            right: '10px',
-                            background: 'red',
-                            color: 'white',
-                            padding: '10px 15px',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                            fontSize: '14px'
-                        }}
-                    >
-                        🚨 Sign Out (Debug)
-                    </button>
-                )}
-
                 <h1 style={styles.title}>Your AI Career Roadmap</h1>
                 <p style={styles.paragraph}>
                     Upload your resume, share your career goals, and get a personalized roadmap to success with AI-powered insights.
@@ -77,17 +49,11 @@ export default function Landing() {
                 >
                     Get Started
                 </button>
-
-                {/* Debug info */}
-                <div style={{ color: 'white', textAlign: 'center', marginTop: '20px' }}>
-                    <p>🐛 Debug: Signed In = {isSignedIn ? 'YES' : 'NO'}</p>
-                </div>
             </div>
         </div>
     );
 }
 
-// Your styles stay the same...
 const styles = {
     page: {
         minHeight: "100vh",
@@ -99,7 +65,7 @@ const styles = {
         color: "black",
         flex: 1,
         padding: "2rem",
-        position: "relative" as const, // Add this so the absolute positioned button works
+        position: "relative" as const,
     },
     title: {
         color: "white",
